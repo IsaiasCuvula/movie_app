@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _movieProvider = Provider.of<MovieProvider>(context, listen: false);
-    //_movieProvider.fetchMovies();
+    _movieProvider.fetchMovies();
   }
 
   @override

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/models/Movie.dart';
 import 'package:movie_app/utils/movie_app_theme.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+  const DetailScreen({Key? key, required this.movie}) : super(key: key);
+
+  final Movie movie;
 
   @override
   Widget build(BuildContext context) {
@@ -58,21 +61,21 @@ class DetailScreen extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Expanded(
+                      Expanded(
                         flex: 3,
                         child: Text(
-                          'Jurassic World',
+                          '${movie.title}',
                           textAlign: TextAlign.start,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30.0,
                           ),
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 1,
                         child: Text(
-                          '2022',
+                          '${movie.year}',
                           textAlign: TextAlign.start,
                         ),
                       ),
@@ -100,16 +103,10 @@ class DetailScreen extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                   const SizedBox(height: 30.0),
-                  const Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget lobortis diam.'
-                    ' Nam aliquet ornare justo, in hendrerit libero gravida in. '
-                    'Sed egestas, turpis ac tincidunt fringilla, turpis metus laoreet sapien, sed condimentum nibh lorem quis dui.'
-                    ' Maecenas suscipit consectetur lorem in accumsan. Donec tempor molestie ligula at ornare. Nulla facilisi.'
-                    ' Praesent non magna eu nunc placerat dictum efficitur efficitur eros. '
-                    'Curabitur sit amet nunc lobortis, dignissim nisi eu, gravida sapien.'
-                    ' Morbi a ultrices quam. Sed non risus vel urna tincidunt finibus.',
+                  Text(
+                    '${movie.storyline}',
                     textAlign: TextAlign.justify,
-                    style: TextStyle(fontSize: 18.0),
+                    style: const TextStyle(fontSize: 18.0),
                   ),
                 ],
               ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/models/Movie.dart';
+import 'package:movie_app/providers/movie_provider.dart';
+import 'package:provider/provider.dart';
 
-import '../detail_screen.dart';
+import 'list_movie_tile.dart';
 
 class ListMovies extends StatelessWidget {
   const ListMovies({Key? key, required this.deviceSize}) : super(key: key);
@@ -9,58 +12,27 @@ class ListMovies extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisExtent: 200,
-        mainAxisSpacing: 8.0,
-        crossAxisSpacing: 8.0,
-      ),
-      itemCount: 10,
-      itemBuilder: (ctx, index) {
-        return InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (ctx, animation, animation1) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: const DetailScreen(),
-                  );
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: deviceSize.width * 0.20,
-            decoration: BoxDecoration(
-              color: Colors.purple,
-              borderRadius: BorderRadius.circular(20.0),
-              // image: DecorationImage(
-              //     image: ,
-              // ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                Text(
-                  'Jurassic World',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16.0,
-                  ),
+    return Consumer<MovieProvider>(
+      builder: (ctx, provider, widget) {
+        final List<Movie> movies = provider.movies;
+
+        return provider.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisExtent: 200,
+                  mainAxisSpacing: 8.0,
+                  crossAxisSpacing: 8.0,
                 ),
-                Text('Isaias', maxLines: 1),
-                SizedBox(height: 10.0),
-              ],
-            ),
-          ),
-        );
+                itemCount: movies.length,
+                itemBuilder: (ctx, index) {
+                  final Movie movie = movies[index];
+                  return ListMovieTile(deviceSize: deviceSize, movie: movie);
+                },
+              );
       },
     );
   }

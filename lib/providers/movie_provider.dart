@@ -1,33 +1,45 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 import 'package:movie_app/models/Movie.dart';
 import 'package:movie_app/utils/constants.dart';
 
 class MovieProvider with ChangeNotifier {
-
   bool isLoading = false;
   final List<Movie> _movies = [];
-  List<Movie> get movies => _movies;
 
+  List<Movie> get movies => _movies;
 
   Future<void> fetchMovies() async {
     final Uri movieUri = Uri.parse(kApiUrl);
-    try{
+    try {
       isLoading = true;
-      final moviesResponse = await http.get(movieUri);
-      //final data = Movie.fromJson(jsonDecode(moviesResponse.body));
+      final http.Response moviesResponse = await http.get(movieUri);
+      final responseData = jsonDecode(moviesResponse.body);
+      //final data = Movie.fromJson();
 
-      print("my: ${moviesResponse.body}");
+      //final movie = Movie.fromJson(jsonDecode(moviesResponse.body));
+
+      for (int i = 0; i < 10; i++) {
+        final Movie movie = Movie.fromJson(responseData[i]);
+        _movies.add(movie);
+
+        print("imdbRating: ${movie.imdbRating}");
+        print(responseData.toString());
+      }
+
+      //print("my: ${movie}");
+
+      //print("my: ${moviesResponse.body}");
 
       isLoading = false;
-      notifyListeners();
-    } on HttpException catch (e){
+    } on HttpException catch (e) {
       debugPrint('Fetching data error: ${e.message}');
       isLoading = false;
       throw Exception('Failed to load movies');
     }
+    notifyListeners();
   }
 }
