@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/providers/movie_provider.dart';
-import 'package:movie_app/screens/home/home_screen.dart';
+import 'package:movie_app/screens/detail_screen.dart';
 import 'package:movie_app/utils/movie_app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class MovieApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Movie App',
         theme: MovieAppTheme.dark(),
-        home: const HomeScreen(),
+        home: const DetailScreen(),
       ),
     );
   }
