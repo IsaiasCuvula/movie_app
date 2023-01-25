@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../detail_screen.dart';
+
 class ListMovies extends StatelessWidget {
   const ListMovies({Key? key, required this.deviceSize}) : super(key: key);
 
@@ -18,30 +20,45 @@ class ListMovies extends StatelessWidget {
       ),
       itemCount: 10,
       itemBuilder: (ctx, index) {
-        return Container(
-          width: deviceSize.width * 0.20,
-          decoration: BoxDecoration(
-            color: Colors.purple,
-            borderRadius: BorderRadius.circular(20.0),
-            // image: DecorationImage(
-            //     image: ,
-            // ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Text(
-                'Jurassic World',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16.0,
-                ),
+        return InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (ctx, animation, animation1) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: const DetailScreen(),
+                  );
+                },
               ),
-              Text('Isaias', maxLines: 1),
-              SizedBox(height: 10.0),
-            ],
+            );
+          },
+          child: Container(
+            width: deviceSize.width * 0.20,
+            decoration: BoxDecoration(
+              color: Colors.purple,
+              borderRadius: BorderRadius.circular(20.0),
+              // image: DecorationImage(
+              //     image: ,
+              // ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const [
+                Text(
+                  'Jurassic World',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16.0,
+                  ),
+                ),
+                Text('Isaias', maxLines: 1),
+                SizedBox(height: 10.0),
+              ],
+            ),
           ),
         );
       },

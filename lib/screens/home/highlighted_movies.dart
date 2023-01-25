@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/screens/detail_screen.dart';
 
 class HighlightedMovies extends StatelessWidget {
   const HighlightedMovies({Key? key, required this.deviceSize})
@@ -14,30 +15,45 @@ class HighlightedMovies extends StatelessWidget {
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (ctx, index) {
-          return Container(
-            width: deviceSize.width * 0.42,
-            decoration: BoxDecoration(
-              color: Colors.amber,
-              borderRadius: BorderRadius.circular(20.0),
-              // image: DecorationImage(
-              //     image: ,
-              // ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
-                Text(
-                  'Jurassic World Jurassic',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                  ),
+          return InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (ctx, animation, animation1) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: const DetailScreen(),
+                    );
+                  },
                 ),
-                Text('Isaias', maxLines: 1),
-                SizedBox(height: 10.0),
-              ],
+              );
+            },
+            child: Container(
+              width: deviceSize.width * 0.42,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(20.0),
+                // image: DecorationImage(
+                //     image: ,
+                // ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+                  Text(
+                    'Jurassic World Jurassic',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  Text('Isaias', maxLines: 1),
+                  SizedBox(height: 10.0),
+                ],
+              ),
             ),
           );
         },

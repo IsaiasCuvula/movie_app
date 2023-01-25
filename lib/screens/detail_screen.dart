@@ -12,6 +12,7 @@ class DetailScreen extends StatelessWidget {
         children: [
           //TODO - Background image
           Container(
+            alignment: Alignment.topLeft,
             width: deviceSize.width,
             height: deviceSize.height * 0.50,
             decoration: BoxDecoration(
@@ -25,6 +26,26 @@ class DetailScreen extends StatelessWidget {
                 ],
               ),
               //image: DecorationImage(image: image)
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 50.0, left: 6.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back_ios),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      print('save in favorites');
+                    },
+                    icon: const Icon(Icons.bookmark_border_outlined),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
