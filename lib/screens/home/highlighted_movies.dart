@@ -37,6 +37,7 @@ class HighlightedMovies extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     final Movie movie = movies[index];
                     return InkWell(
+                      borderRadius: BorderRadius.circular(20.0),
                       onTap: () {
                         Navigator.push(
                           context,

@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/models/Movie.dart';
-import 'package:movie_app/utils/movie_app_theme.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({Key? key, required this.movie}) : super(key: key);
@@ -11,48 +11,31 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size deviceSize = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
-        children: [
-          //TODO - Background image
-          Container(
-            alignment: Alignment.topLeft,
-            width: deviceSize.width,
-            height: deviceSize.height * 0.50,
-            decoration: BoxDecoration(
-              //color: Colors.tealAccent,
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  kDarkGrey,
-                  Colors.red,
-                ],
-              ),
-              //image: DecorationImage(image: image)
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 50.0, left: 6.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.arrow_back_ios),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      print('save in favorites');
-                    },
-                    icon: const Icon(Icons.bookmark_border_outlined),
-                  ),
-                ],
-              ),
-            ),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              print('save in favorites');
+            },
+            icon: const Icon(Icons.bookmark_border_outlined),
           ),
-          Expanded(
-            child: SingleChildScrollView(
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.topLeft,
+              width: deviceSize.width,
+              height: deviceSize.height * 0.50,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: CachedNetworkImageProvider('${movie.posterurl}'),
+                ),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,46 +43,49 @@ class DetailScreen extends StatelessWidget {
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        flex: 3,
+                        flex: 4,
                         child: Text(
                           '${movie.title}',
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 30.0,
+                            fontSize: 28.0,
                           ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          '${movie.year}',
-                          textAlign: TextAlign.start,
                         ),
                       ),
                       const Expanded(child: SizedBox()),
                       Expanded(
                         flex: 3,
                         child: Column(
-                          children: const [
+                          children: [
                             Text(
-                              '⭐️⭐⭐⭐⭐',
+                              getAverageRatingStars(),
                               textAlign: TextAlign.start,
                             ),
                             Text(
-                              'From 342 users',
+                              'From ${movie.ratings?.length} users',
                               textAlign: TextAlign.start,
-                              style: TextStyle(fontSize: 12.0),
+                              style: const TextStyle(fontSize: 12.0),
                             ),
                           ],
                         ),
                       ),
                     ],
                   ),
-                  const Text(
-                    'Marvel Studios',
+                  const SizedBox(height: 20.0),
+                  Text(
+                    'Release date: ${movie.year}',
+                    textAlign: TextAlign.start,
+                  ),
+                  Text(
+                    getGenres(),
+                    textAlign: TextAlign.start,
+                  ),
+                  Text(
+                    getActors(),
                     textAlign: TextAlign.start,
                   ),
                   const SizedBox(height: 30.0),
@@ -111,9 +97,29 @@ class DetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 100.0),
+          ],
+        ),
       ),
     );
+  }
+
+  String getGenres() {
+    final String genres =
+        movie.genres?.reduce((value, element) => '$value, $element') as String;
+    return genres;
+  }
+
+  String getActors() {
+    final String actor =
+        movie.actors?.reduce((value, element) => '$value, $element') as String;
+    return actor;
+  }
+
+  String getAverageRatingStars() {
+    final int ratingLength = movie.ratings?.length as int;
+    final int totalRating = movie.ratings
+        ?.reduce((element1, element2) => element1 + element2) as int;
+    return '⭐' * (totalRating / ratingLength).round();
   }
 }

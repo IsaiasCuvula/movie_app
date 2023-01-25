@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/Movie.dart';
+import '../../widgets/image_error_placeholder.dart';
 import '../detail_screen.dart';
 
 class ListMovieTile extends StatelessWidget {
@@ -16,6 +18,7 @@ class ListMovieTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.circular(20.0),
       onTap: () {
         Navigator.push(
           context,
@@ -29,31 +32,24 @@ class ListMovieTile extends StatelessWidget {
           ),
         );
       },
-      child: Container(
-        width: deviceSize.width * 0.20,
-        decoration: BoxDecoration(
-          color: Colors.purple,
-          borderRadius: BorderRadius.circular(20.0),
-          // image: DecorationImage(
-          //     image: ,
-          // ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              '${movie.title}',
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16.0,
+      child: CachedNetworkImage(
+        imageBuilder: (ctx, imageProvider) {
+          return Container(
+            width: deviceSize.width * 0.20,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: imageProvider,
               ),
             ),
-            Text('${movie.year}', maxLines: 1),
-            const SizedBox(height: 10.0),
-          ],
-        ),
+          );
+        },
+        placeholder: (context, url) =>
+            const Center(child: CircularProgressIndicator()),
+        errorWidget: (context, url, error) => ImageErrorPlaceHolder(
+            width: deviceSize.width * 0.20, title: '${movie.title}'),
+        imageUrl: '${movie.posterurl}',
       ),
     );
   }
