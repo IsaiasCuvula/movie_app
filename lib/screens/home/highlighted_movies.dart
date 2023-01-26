@@ -14,7 +14,7 @@ class HighlightedMovies extends StatelessWidget {
     final Size deviceSize = MediaQuery.of(context).size;
     return Consumer<MovieProvider>(
       builder: (ctx, provider, _) {
-        final List<Movie> movies = provider.movies;
+        final List<Movie> movies = provider.randomMovies;
         return SizedBox(
           height: deviceSize.height * 0.30,
           child: provider.isLoading
