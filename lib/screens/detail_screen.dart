@@ -76,6 +76,19 @@ class DetailScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20.0),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.access_time,
+                        size: 18.0,
+                      ),
+                      const SizedBox(width: 8.0),
+                      Text(
+                        getDuration(),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
                   Text(
                     'Release date: ${movie.year}',
                     textAlign: TextAlign.start,
@@ -102,6 +115,11 @@ class DetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getDuration() {
+    final String? duration = movie.duration?.replaceAll(RegExp(r'\D'), '');
+    return '$duration min';
   }
 
   String getGenres() {

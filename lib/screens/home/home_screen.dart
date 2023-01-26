@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               HighlightedMovies(deviceSize: deviceSize),
               const SizedBox(height: 30.0),
               const Text(
-                'Movies coming soon',
+                'All movies',
                 style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.w800),
               ),
               const SizedBox(height: 30.0),
