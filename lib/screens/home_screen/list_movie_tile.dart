@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/screens/detail_screen/icon_text_row.dart';
 import 'package:movie_app/utils/helpers.dart';
 
 import '../../models/movie.dart';
@@ -22,14 +23,7 @@ class ListMovieTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          PageRouteBuilder(
-            pageBuilder: (ctx, animation, animation1) {
-              return FadeTransition(
-                opacity: animation,
-                child: DetailScreen(movie: movie),
-              );
-            },
-          ),
+          Helper.customTransition(DetailScreen(movie: movie)),
         );
       },
       child: Container(
@@ -59,17 +53,11 @@ class ListMovieTile extends StatelessWidget {
                     ),
                   ),
                   Text('${movie.poster}', maxLines: 1),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.star_border,
-                        color: Colors.amber,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 6.0),
-                      Text(getRatings(movie), maxLines: 1),
-                    ],
-                  ),
+                  IconTextRow(
+                    iconData: Icons.star_border,
+                    label: getRatings(movie),
+                    color: Colors.amber,
+                  )
                 ],
               ),
             ),

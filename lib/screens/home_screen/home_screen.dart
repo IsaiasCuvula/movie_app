@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/screens/home_screen/search_text_field.dart';
+import 'package:movie_app/screens/profile_screen.dart';
+import 'package:movie_app/screens/watch_list.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/movie_provider.dart';
 import '../../utils/constants.dart';
+import '../../utils/helpers.dart';
 import 'list_movies.dart';
 import 'most_rated_movies.dart';
 
@@ -51,6 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     _loadMoreMovies();
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Movie App'),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           controller: _scrollController,
@@ -58,11 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              Text(
-                'Watch what you want',
-                style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.w800),
-              ),
-              SizedBox(height: 30.0),
               SearchTextField(),
               SizedBox(height: 30.0),
               MostRatedMovies(),
@@ -79,6 +80,51 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 100.0),
             ],
           ),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.white),
+              child: Center(
+                child: Text(
+                  'Movie App',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home_filled),
+              title: const Text('Home'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.bookmark),
+              title: const Text('Watch list'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  Helper.customTransition(const WatchList()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Profile'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  Helper.customTransition(const ProfileScreen()),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

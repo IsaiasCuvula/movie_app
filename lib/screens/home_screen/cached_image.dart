@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/movie.dart';
-import '../../widgets/image_error_placeholder.dart';
+import 'image_error_placeholder.dart';
 
 class CachedImage extends StatelessWidget {
   const CachedImage({Key? key, required this.movie}) : super(key: key);
