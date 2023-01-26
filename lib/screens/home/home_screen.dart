@@ -24,32 +24,43 @@ class _HomeScreenState extends State<HomeScreen> {
     _movieProvider.fetchMovies();
   }
 
+  //final movieProvider = Provider.of<MovieProvider>(context, listen: false);
+  // _scrollController.addListener(() {
+  // if (_scrollController.position.pixels ==
+  // _scrollController.position.maxScrollExtent) {
+  // movieProvider.fetchMovies();
+  // }
+  // });
+
   @override
   Widget build(BuildContext context) {
-    final Size deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          //controller: _scrollController,
           padding: kPadding20,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
+            children: const [
+              Text(
                 'Watch what you want',
                 style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.w800),
               ),
-              const SizedBox(height: 30.0),
-              const SearchTextField(),
-              const SizedBox(height: 30.0),
-              HighlightedMovies(deviceSize: deviceSize),
-              const SizedBox(height: 30.0),
-              const Text(
+              SizedBox(height: 30.0),
+              SearchTextField(),
+              SizedBox(height: 30.0),
+              HighlightedMovies(),
+              SizedBox(height: 30.0),
+              Text(
                 'All movies',
-                style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.w800),
+                style: TextStyle(
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
-              const SizedBox(height: 30.0),
-              ListMovies(deviceSize: deviceSize),
-              const SizedBox(height: 100.0),
+              SizedBox(height: 30.0),
+              ListMovies(),
+              SizedBox(height: 100.0),
             ],
           ),
         ),

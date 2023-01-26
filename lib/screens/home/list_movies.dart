@@ -6,9 +6,7 @@ import 'package:provider/provider.dart';
 import 'list_movie_tile.dart';
 
 class ListMovies extends StatelessWidget {
-  const ListMovies({Key? key, required this.deviceSize}) : super(key: key);
-
-  final Size deviceSize;
+  const ListMovies({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +17,20 @@ class ListMovies extends StatelessWidget {
         return provider.isLoading
             ? const Center(child: CircularProgressIndicator())
             : GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisExtent: 200,
-                  mainAxisSpacing: 8.0,
-                  crossAxisSpacing: 8.0,
-                ),
-                itemCount: movies.length,
-                itemBuilder: (ctx, index) {
-                  final Movie movie = movies[index];
-                  return ListMovieTile(deviceSize: deviceSize, movie: movie);
-                },
-              );
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisExtent: 200,
+            mainAxisSpacing: 8.0,
+            crossAxisSpacing: 8.0,
+          ),
+          itemCount: movies.length,
+          itemBuilder: (ctx, index) {
+            final Movie movie = movies[index];
+            return ListMovieTile(movie: movie);
+          },
+        );
       },
     );
   }

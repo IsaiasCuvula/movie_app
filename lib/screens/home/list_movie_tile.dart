@@ -8,15 +8,14 @@ import '../detail_screen.dart';
 class ListMovieTile extends StatelessWidget {
   const ListMovieTile({
     Key? key,
-    required this.deviceSize,
     required this.movie,
   }) : super(key: key);
 
-  final Size deviceSize;
   final Movie movie;
 
   @override
   Widget build(BuildContext context) {
+    final Size deviceSize = MediaQuery.of(context).size;
     return InkWell(
       borderRadius: BorderRadius.circular(20.0),
       onTap: () {
@@ -48,7 +47,9 @@ class ListMovieTile extends StatelessWidget {
         placeholder: (context, url) =>
             const Center(child: CircularProgressIndicator()),
         errorWidget: (context, url, error) => ImageErrorPlaceHolder(
-            width: deviceSize.width * 0.20, title: '${movie.title}'),
+          width: deviceSize.width * 0.20,
+          title: '${movie.title}',
+        ),
         imageUrl: '${movie.posterurl}',
       ),
     );
