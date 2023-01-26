@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:movie_app/models/Movie.dart';
+import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/utils/constants.dart';
 import 'package:movie_app/utils/helpers.dart';
 

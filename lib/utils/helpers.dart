@@ -1,4 +1,4 @@
-import '../models/Movie.dart';
+import '../models/movie.dart';
 
 class Helper {
   static double calculateAverageRatings(Movie movie) {

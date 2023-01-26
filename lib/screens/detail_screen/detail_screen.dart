@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_app/models/Movie.dart';
+import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/utils/helpers.dart';
+
+import 'icon_text_row.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({Key? key, required this.movie}) : super(key: key);
@@ -61,6 +63,7 @@ class DetailScreen extends StatelessWidget {
                       Expanded(
                         flex: 3,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
                               getAverageRatingStars(),
@@ -77,30 +80,21 @@ class DetailScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.access_time,
-                        size: 18.0,
-                      ),
-                      const SizedBox(width: 8.0),
-                      Text(
-                        getDuration(),
-                        textAlign: TextAlign.start,
-                      ),
-                    ],
+                  IconTextRow(
+                    iconData: Icons.access_time,
+                    label: getDuration(),
                   ),
-                  Text(
-                    'Release date: ${movie.year}',
-                    textAlign: TextAlign.start,
+                  IconTextRow(
+                    iconData: Icons.calendar_today,
+                    label: '${movie.year}',
                   ),
-                  Text(
-                    getGenres(),
-                    textAlign: TextAlign.start,
+                  IconTextRow(
+                    iconData: Icons.category,
+                    label: getGenres(),
                   ),
-                  Text(
-                    getActors(),
-                    textAlign: TextAlign.start,
+                  IconTextRow(
+                    iconData: Icons.people,
+                    label: getActors(),
                   ),
                   const SizedBox(height: 30.0),
                   Text(

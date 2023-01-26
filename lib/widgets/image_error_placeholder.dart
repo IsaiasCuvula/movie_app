@@ -9,9 +9,12 @@ class ImageErrorPlaceHolder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.grey,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,

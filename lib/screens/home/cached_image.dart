@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/Movie.dart';
+import '../../models/movie.dart';
 import '../../widgets/image_error_placeholder.dart';
 
 class CachedImage extends StatelessWidget {

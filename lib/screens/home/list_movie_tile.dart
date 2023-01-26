@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/utils/helpers.dart';
 
-import '../../models/Movie.dart';
-import '../detail_screen.dart';
+import '../../models/movie.dart';
+import '../detail_screen/detail_screen.dart';
 import 'cached_image.dart';
 
 class ListMovieTile extends StatelessWidget {
