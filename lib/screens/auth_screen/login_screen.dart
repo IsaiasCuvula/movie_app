@@ -189,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Helper.customTransition(const HomeScreen()),
           );
         }).catchError((error) {
-          Helper.snackBar(error, context);
+          Helper.snackBar('Something went wrong: $error', context);
         });
       }
     }

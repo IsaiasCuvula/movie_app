@@ -24,7 +24,7 @@ class Helper {
 
   static snackBar(String msg, BuildContext context) {
     final snackBar = SnackBar(
-      content: Text('Something went wrong: $msg'),
+      content: Text(msg),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
