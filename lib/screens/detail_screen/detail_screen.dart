@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/models/movie.dart';
+import 'package:movie_app/providers/watch_list_movie_provider.dart';
 import 'package:movie_app/utils/helpers.dart';
+import 'package:provider/provider.dart';
 
 import 'icon_text_row.dart';
 
@@ -16,15 +18,20 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: () {
-              print('save in favorites');
+          Consumer<WatchListMovieProvider>(
+            builder: (ctx, provider, _) {
+              return IconButton(
+                onPressed: () async {
+                  //provider.saveMovie(movie);
+                },
+                icon: const Icon(Icons.bookmark_border_outlined),
+              );
             },
-            icon: const Icon(Icons.bookmark_border_outlined),
           ),
         ],
       ),
       body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(

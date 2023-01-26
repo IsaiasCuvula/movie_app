@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../models/movie.dart';
 
@@ -20,5 +20,12 @@ class Helper {
         );
       },
     );
+  }
+
+  static snackBar(String msg, BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('Something went wrong: $msg'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

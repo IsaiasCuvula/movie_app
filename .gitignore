@@ -31,6 +31,11 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+pubspec.lock
+ios/firebase_app_id_file.json
+android/app/google-services.json
+lib/firebase_options.dart
+android/key.properties
 
 # Symbolication related
 app.*.symbols
