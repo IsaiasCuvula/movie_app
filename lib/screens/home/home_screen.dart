@@ -16,28 +16,44 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late MovieProvider _movieProvider;
+  late ScrollController _scrollController;
+  int pageNumber = 1;
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
     _movieProvider = Provider.of<MovieProvider>(context, listen: false);
-    _movieProvider.fetchMovies();
+    _loadInitialMovies();
   }
 
-  //final movieProvider = Provider.of<MovieProvider>(context, listen: false);
-  // _scrollController.addListener(() {
-  // if (_scrollController.position.pixels ==
-  // _scrollController.position.maxScrollExtent) {
-  // movieProvider.fetchMovies();
-  // }
-  // });
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  void _loadInitialMovies() async {
+    await _movieProvider.fetchMovies(pageNumber);
+  }
+
+  void _loadMoreMovies() async {
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        pageNumber++;
+        _movieProvider.fetchMovies(pageNumber);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    _loadMoreMovies();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          //controller: _scrollController,
+          controller: _scrollController,
           padding: kPadding20,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

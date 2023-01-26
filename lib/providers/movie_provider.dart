@@ -16,22 +16,25 @@ class MovieProvider with ChangeNotifier {
 
   List<Movie> get randomMovies => _randomMovies;
 
-
   void getRandomMovies() {
+    _randomMovies.clear();
     for (int i = 1; i <= 3; i++) {
       final int randomIndex = Random().nextInt(_movies.length);
-      _randomMovies.insert(0, _movies[randomIndex]);
+      _randomMovies.add(_movies[randomIndex]);
     }
   }
 
-  Future<void> fetchMovies() async {
+  Future<void> fetchMovies(int pageNumber) async {
     final Uri movieUri = Uri.parse(kApiUrl);
     try {
       isLoading = true;
       final http.Response responseData = await http.get(movieUri);
       final moviesResponse = jsonDecode(responseData.body);
 
-      for (int i = 0; i < 10; i++) {
+      final totalMoviesToFetch = pageNumber * 10;
+
+      _movies.clear();
+      for (int i = 0; i < totalMoviesToFetch; i++) {
         final Movie movie = Movie.fromJson(moviesResponse[i]);
         _movies.add(movie);
       }
