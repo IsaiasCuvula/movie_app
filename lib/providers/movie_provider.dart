@@ -1,26 +1,28 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_app/models/Movie.dart';
 import 'package:movie_app/utils/constants.dart';
+import 'package:movie_app/utils/helpers.dart';
 
 class MovieProvider with ChangeNotifier {
   bool isLoading = false;
   final List<Movie> _movies = [];
-  final List<Movie> _randomMovies = [];
+  final List<Movie> _mostRatedMovies = [];
 
   List<Movie> get movies => _movies;
 
-  List<Movie> get randomMovies => _randomMovies;
+  List<Movie> get mostRatedMovies => _mostRatedMovies;
 
-  void getRandomMovies() {
-    _randomMovies.clear();
-    for (int i = 1; i <= 3; i++) {
-      final int randomIndex = Random().nextInt(_movies.length);
-      _randomMovies.add(_movies[randomIndex]);
+  void _getMostRatedMovies() {
+    _mostRatedMovies.clear();
+    for (Movie movie in _movies) {
+      final double movieRating = Helper.calculateAverageRatings(movie);
+      if (movieRating >= 6) {
+        _mostRatedMovies.insert(0, movie);
+      }
     }
   }
 
@@ -44,7 +46,7 @@ class MovieProvider with ChangeNotifier {
       isLoading = false;
       throw Exception('Failed to load movies');
     }
-    getRandomMovies();
+    _getMostRatedMovies();
     notifyListeners();
   }
 }

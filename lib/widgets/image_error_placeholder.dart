@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ImageErrorPlaceHolder extends StatelessWidget {
-  const ImageErrorPlaceHolder({
-    Key? key,
-    required this.width,
-    required this.title,
-    this.height,
-  }) : super(key: key);
+  const ImageErrorPlaceHolder({Key? key, required this.title})
+      : super(key: key);
 
-  final double width;
-  final double? height;
   final String title;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height,
-      width: width,
       decoration: BoxDecoration(
         color: Colors.grey,
         borderRadius: BorderRadius.circular(20.0),

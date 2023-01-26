@@ -10,6 +10,7 @@ class ListMovies extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size deviceSize = MediaQuery.of(context).size;
     return Consumer<MovieProvider>(
       builder: (ctx, provider, widget) {
         final List<Movie> movies = provider.movies;
@@ -17,20 +18,23 @@ class ListMovies extends StatelessWidget {
         return provider.isLoading
             ? const Center(child: CircularProgressIndicator())
             : GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisExtent: 200,
-            mainAxisSpacing: 8.0,
-            crossAxisSpacing: 8.0,
-          ),
-          itemCount: movies.length,
-          itemBuilder: (ctx, index) {
-            final Movie movie = movies[index];
-            return ListMovieTile(movie: movie);
-          },
-        );
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisExtent: 200,
+                  mainAxisSpacing: 8.0,
+                  crossAxisSpacing: 8.0,
+                ),
+                itemCount: movies.length,
+                itemBuilder: (ctx, index) {
+                  final Movie movie = movies[index];
+                  return ListMovieTile(
+                    movie: movie,
+                    width: deviceSize.width * 0.20,
+                  );
+                },
+              );
       },
     );
   }

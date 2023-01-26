@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/models/Movie.dart';
+import 'package:movie_app/utils/helpers.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({Key? key, required this.movie}) : super(key: key);
@@ -135,9 +136,7 @@ class DetailScreen extends StatelessWidget {
   }
 
   String getAverageRatingStars() {
-    final int ratingLength = movie.ratings?.length as int;
-    final int totalRating = movie.ratings
-        ?.reduce((element1, element2) => element1 + element2) as int;
-    return '⭐' * (totalRating / ratingLength).round();
+    final double totalRating = Helper.calculateAverageRatings(movie);
+    return '⭐' * totalRating.round();
   }
 }

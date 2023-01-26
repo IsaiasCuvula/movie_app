@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../../providers/movie_provider.dart';
 import '../../utils/constants.dart';
-import 'highlighted_movies.dart';
 import 'list_movies.dart';
+import 'most_rated_movies.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 30.0),
               SearchTextField(),
               SizedBox(height: 30.0),
-              HighlightedMovies(),
+              MostRatedMovies(),
               SizedBox(height: 30.0),
               Text(
                 'All movies',

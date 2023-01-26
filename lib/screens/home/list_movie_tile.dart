@@ -1,21 +1,22 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/utils/helpers.dart';
 
 import '../../models/Movie.dart';
-import '../../widgets/image_error_placeholder.dart';
 import '../detail_screen.dart';
+import 'cached_image.dart';
 
 class ListMovieTile extends StatelessWidget {
   const ListMovieTile({
     Key? key,
     required this.movie,
+    required this.width,
   }) : super(key: key);
 
   final Movie movie;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
-    final Size deviceSize = MediaQuery.of(context).size;
     return InkWell(
       borderRadius: BorderRadius.circular(20.0),
       onTap: () {
@@ -31,27 +32,54 @@ class ListMovieTile extends StatelessWidget {
           ),
         );
       },
-      child: CachedNetworkImage(
-        imageBuilder: (ctx, imageProvider) {
-          return Container(
-            width: deviceSize.width * 0.20,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: imageProvider,
+      child: Container(
+        width: width,
+        decoration: BoxDecoration(
+          color: Colors.black45,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Flexible(
+              child: CachedImage(movie: movie),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${movie.title}',
+                    maxLines: 2,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  Text('${movie.poster}', maxLines: 1),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.star_border,
+                        color: Colors.amber,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 6.0),
+                      Text(getRatings(movie), maxLines: 1),
+                    ],
+                  ),
+                ],
               ),
             ),
-          );
-        },
-        placeholder: (context, url) =>
-            const Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) => ImageErrorPlaceHolder(
-          width: deviceSize.width * 0.20,
-          title: '${movie.title}',
+          ],
         ),
-        imageUrl: '${movie.posterurl}',
       ),
     );
+  }
+
+  String getRatings(Movie movie) {
+    return '${Helper.calculateAverageRatings(movie)}';
   }
 }
