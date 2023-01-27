@@ -11,10 +11,26 @@ class MovieProvider with ChangeNotifier {
   bool isLoading = false;
   final List<Movie> _movies = [];
   final List<Movie> _mostRatedMovies = [];
+  final List<Movie> _filteredMovies = [];
 
-  List<Movie> get movies => _movies;
+  List<Movie> get movies => _filteredMovies.isEmpty ? _movies : _filteredMovies;
 
   List<Movie> get mostRatedMovies => _mostRatedMovies;
+
+  void getFilteredList(String keyword) {
+    _filteredMovies.clear();
+    if (keyword.isNotEmpty) {
+      _filteredMovies.addAll(_movies
+          .where(
+            (movie) =>
+                movie.title?.toLowerCase().contains(keyword.toLowerCase()) ??
+                false,
+          )
+          .toSet()
+          .toList());
+      notifyListeners();
+    }
+  }
 
   void _getMostRatedMovies() {
     _mostRatedMovies.clear();

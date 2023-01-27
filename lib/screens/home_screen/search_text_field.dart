@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/movie_provider.dart';
 import '../../utils/movie_app_theme.dart';
 
 class SearchTextField extends StatefulWidget {
@@ -11,18 +13,19 @@ class SearchTextField extends StatefulWidget {
 
 class _SearchTextFieldState extends State<SearchTextField> {
   late TextEditingController _textEditingController;
+  late MovieProvider _movieProvider;
 
   @override
   void initState() {
     super.initState();
     _textEditingController = TextEditingController();
-    //_movieProvider.fetchMovies();
+    _movieProvider = Provider.of<MovieProvider>(context, listen: false);
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
     super.dispose();
+    _textEditingController.dispose();
   }
 
   @override
@@ -30,6 +33,9 @@ class _SearchTextFieldState extends State<SearchTextField> {
     return TextField(
       controller: _textEditingController,
       cursorColor: Colors.white,
+      onChanged: (keyword) {
+        _movieProvider.getFilteredList(keyword);
+      },
       decoration: InputDecoration(
         filled: true,
         fillColor: kGrey,
