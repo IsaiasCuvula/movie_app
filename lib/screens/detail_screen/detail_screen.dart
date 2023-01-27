@@ -22,9 +22,17 @@ class DetailScreen extends StatelessWidget {
             builder: (ctx, provider, _) {
               return IconButton(
                 onPressed: () async {
-                  //provider.saveMovie(movie);
+                  if (provider.isFavorite(movie)) {
+                    provider.removeMovieFromFavorite(movie);
+                  } else {
+                    provider.saveMovieToFavorite(movie);
+                  }
                 },
-                icon: const Icon(Icons.bookmark_border_outlined),
+                icon: Icon(
+                  provider.isFavorite(movie)
+                      ? Icons.bookmark_outlined
+                      : Icons.bookmark_border_outlined,
+                ),
               );
             },
           ),
@@ -88,7 +96,7 @@ class DetailScreen extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   IconTextRow(
                     iconData: Icons.access_time,
-                    label: getDuration(),
+                    label: Helper.getDuration(movie),
                   ),
                   IconTextRow(
                     iconData: Icons.calendar_today,
@@ -96,7 +104,7 @@ class DetailScreen extends StatelessWidget {
                   ),
                   IconTextRow(
                     iconData: Icons.category,
-                    label: getGenres(),
+                    label: Helper.getGenres(movie),
                   ),
                   IconTextRow(
                     iconData: Icons.people,
@@ -116,17 +124,6 @@ class DetailScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String getDuration() {
-    final String? duration = movie.duration?.replaceAll(RegExp(r'\D'), '');
-    return '$duration min';
-  }
-
-  String getGenres() {
-    final String genres =
-        movie.genres?.reduce((value, element) => '$value, $element') as String;
-    return genres;
   }
 
   String getActors() {

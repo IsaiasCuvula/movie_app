@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/utils/helpers.dart';
 
 import '../../models/movie.dart';
 import '../detail_screen/icon_text_row.dart';
@@ -16,8 +18,14 @@ class WatchListMovieTile extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Flexible(
-          child: Icon(Icons.ac_unit_outlined, size: 100),
+        Flexible(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: CachedNetworkImage(
+              imageUrl: '${movie.posterurl}',
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
         const SizedBox(width: 8.0),
         Flexible(
@@ -33,22 +41,22 @@ class WatchListMovieTile extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10.0),
-              const IconTextRow(
+              IconTextRow(
                 iconData: Icons.star_border,
-                label: '9.5',
+                label: '${Helper.calculateAverageRatings(movie)}',
                 color: Colors.amber,
               ),
-              const IconTextRow(
+              IconTextRow(
                 iconData: Icons.category,
-                label: 'Action',
+                label: Helper.getGenres(movie),
               ),
               IconTextRow(
                 iconData: Icons.calendar_today,
                 label: '${movie.year}',
               ),
-              const IconTextRow(
+              IconTextRow(
                 iconData: Icons.access_time,
-                label: '139 minutes',
+                label: Helper.getDuration(movie),
               ),
             ],
           ),

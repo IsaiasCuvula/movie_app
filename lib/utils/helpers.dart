@@ -10,6 +10,17 @@ class Helper {
     return (totalRating / ratingLength).roundToDouble();
   }
 
+  static String getDuration(Movie movie) {
+    final String? duration = movie.duration?.replaceAll(RegExp(r'\D'), '');
+    return '$duration min';
+  }
+
+  static String getGenres(Movie movie) {
+    final String genres =
+        movie.genres?.reduce((value, element) => '$value, $element') as String;
+    return genres;
+  }
+
   static Route customTransition(Widget child) {
     return PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 500),
