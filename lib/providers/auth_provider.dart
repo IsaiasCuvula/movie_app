@@ -12,6 +12,7 @@ class AuthProvider with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   var isLoading = false;
+  var userInfo = UserModel(email: '', userId: '', username: '');
 
   Future<void> logIn(String email, String password) async {
     try {
@@ -55,9 +56,22 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  User? currentUser() {
+  // User? currentUser() {
+  //   _auth.currentUser?.reload();
+  //   return _auth.currentUser;
+  // }
+
+  Future<UserModel> fetchCurrentUserInfo() async {
     _auth.currentUser?.reload();
-    return _auth.currentUser;
+    final User? user = _auth.currentUser;
+    if (user != null) {
+      final snapshot = await _db.collection(kUsers).doc(user.uid).get();
+      if (snapshot.data() != null) {
+        final UserModel user = UserModel.fromJson(snapshot.data()!);
+        return user;
+      }
+    }
+    return UserModel(email: '', userId: '', username: '');
   }
 
   Future<void> updateUsername(String name) async {
@@ -84,6 +98,7 @@ class AuthProvider with ChangeNotifier {
     try {
       await _auth.signOut().then((value) {
         _isUserLoggedIn(false);
+        _auth.currentUser?.reload();
         isLoading = false;
         notifyListeners();
       });

@@ -1,31 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/providers/auth_provider.dart';
 import 'package:movie_app/screens/auth_screen/welcome_screen.dart';
+import 'package:movie_app/utils/constants.dart';
+import 'package:movie_app/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  late AuthProvider _authProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _authProvider = Provider.of<AuthProvider>(context, listen: false);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final Size deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
         actions: [
           IconButton(
-            onPressed: () {
-              _signOut(context);
+            onPressed: () async {
+              const String title =
+                  'Are you sure you want to sign out from the app?';
+              await Helper.alertDialog(
+                context: context,
+                title: title,
+                content: '',
+                onTap: () {
+                  _signOut(context);
+                },
+              );
             },
             icon: const Icon(Icons.exit_to_app_sharp),
           )
         ],
       ),
+      body: SizedBox(
+        height: deviceSize.height,
+        width: deviceSize.width,
+        child: SingleChildScrollView(
+          padding: kPadding20,
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Consumer<AuthProvider>(
+            builder: (ctx, provider, _) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FutureBuilder(
+                    future: _authProvider.fetchCurrentUserInfo(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final String userName =
+                            snapshot.data?.username as String;
+                        return Text(
+                          userName,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28.0,
+                          ),
+                        );
+                      }
+                      return const SizedBox();
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 
   void _signOut(BuildContext context) async {
-    final provider = Provider.of<AuthProvider>(context, listen: false);
-    provider.signOut().then((value) {
+    _authProvider.signOut().then((value) {
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(

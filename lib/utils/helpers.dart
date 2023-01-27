@@ -28,4 +28,58 @@ class Helper {
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
+  static Future<void> alertDialog({
+    required BuildContext context,
+    required String title,
+    required String content,
+    VoidCallback? onTap,
+  }) async {
+    return await showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          title: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 20.0),
+          ),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: onTap,
+                  child: const Text(
+                    'Yes',
+                    style: TextStyle(
+                      fontSize: 18.8,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'No',
+                    style: TextStyle(
+                      fontSize: 18.8,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
