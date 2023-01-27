@@ -30,9 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Size deviceSize = MediaQuery
-        .of(context)
-        .size;
+    final Size deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -84,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                   ),
                   kVerticalSpace60,
-                  ElevatedButton(
+                  TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
