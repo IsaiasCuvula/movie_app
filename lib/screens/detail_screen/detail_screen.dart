@@ -66,9 +66,8 @@ class DetailScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Expanded(child: SizedBox()),
                       Expanded(
-                        flex: 3,
+                        flex: 2,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [

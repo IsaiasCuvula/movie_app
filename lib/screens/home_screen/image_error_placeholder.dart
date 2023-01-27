@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/utils/constants.dart';
 
 class ImageErrorPlaceHolder extends StatelessWidget {
   const ImageErrorPlaceHolder({Key? key, required this.title})
@@ -21,12 +22,12 @@ class ImageErrorPlaceHolder extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Icon(Icons.error),
-          const SizedBox(height: 40.0),
+          kVerticalSpace10,
           Text(
             title,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 30.0),
+          kVerticalSpace30,
         ],
       ),
     );

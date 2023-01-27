@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/screens/home_screen/search_text_field.dart';
-import 'package:movie_app/screens/profile_screen.dart';
+import 'package:movie_app/screens/profile_screen/profile_screen.dart';
 import 'package:movie_app/screens/watch_list/watch_list.dart';
 import 'package:provider/provider.dart';
 

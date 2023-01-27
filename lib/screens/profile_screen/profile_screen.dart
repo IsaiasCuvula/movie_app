@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/models/user_model.dart';
 import 'package:movie_app/providers/auth_provider.dart';
 import 'package:movie_app/screens/auth_screen/welcome_screen.dart';
+import 'package:movie_app/screens/profile_screen/edit_profile_screen.dart';
 import 'package:movie_app/utils/constants.dart';
 import 'package:movie_app/utils/helpers.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +16,11 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late AuthProvider _authProvider;
+  UserModel _user = UserModel(
+    userId: '',
+    username: 'Bernardo',
+    email: '',
+  );
 
   @override
   void initState() {
@@ -23,7 +30,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Size deviceSize = MediaQuery.of(context).size;
+    final Size deviceSize = MediaQuery
+        .of(context)
+        .size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -60,10 +69,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     future: _authProvider.fetchCurrentUserInfo(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        final String userName =
-                            snapshot.data?.username as String;
+                        _user = snapshot.data as UserModel;
+
                         return Text(
-                          userName,
+                          _user.username,
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
@@ -74,6 +83,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       return const SizedBox();
                     },
                   ),
+                  kVerticalSpace60,
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        Helper.customTransition(
+                          EditProfileScreen(
+                            user: _user,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text('Edit Profile'),
+                  )
                 ],
               );
             },

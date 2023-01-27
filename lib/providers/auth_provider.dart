@@ -56,11 +56,6 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  // User? currentUser() {
-  //   _auth.currentUser?.reload();
-  //   return _auth.currentUser;
-  // }
-
   Future<UserModel> fetchCurrentUserInfo() async {
     _auth.currentUser?.reload();
     final User? user = _auth.currentUser;
