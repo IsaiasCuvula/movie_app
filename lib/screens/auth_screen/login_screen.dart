@@ -156,14 +156,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   const Divider(thickness: 1.0),
-                  kVerticalSpace10,
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Forgot Password?',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                  ),
+                  // kVerticalSpace10,
+                  // TextButton(
+                  //   onPressed: () {},
+                  //   child: const Text(
+                  //     'Forgot Password?',
+                  //     style: TextStyle(fontSize: 18.0),
+                  //   ),
+                  // ),
                   kVerticalSpace50,
                 ],
               ),
